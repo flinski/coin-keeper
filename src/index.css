@@ -1,0 +1,114 @@
+@import 'tailwindcss';
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-Thin.woff2') format('woff2');
+	font-weight: 100;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-ExtraLight.woff2') format('woff2');
+	font-weight: 200;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-Light.woff2') format('woff2');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-SemiBold.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-ExtraBold.woff2') format('woff2');
+	font-weight: 800;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-Black.woff2') format('woff2');
+	font-weight: 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+	--font-inter: 'Inter', sans-serif;
+
+	--color-ui-50: oklch(0.99 0 0);
+	--color-ui-100: oklch(0.97 0 286);
+	--color-ui-200: oklch(0.92 0 286);
+	--color-ui-300: oklch(0.87 0.01 286);
+	--color-ui-400: oklch(0.71 0.01 286);
+	--color-ui-500: oklch(0.55 0.01 286);
+	--color-ui-600: oklch(0.44 0.01 286);
+	--color-ui-700: oklch(0.37 0.01 286);
+	--color-ui-800: oklch(0.27 0.01 286);
+	--color-ui-900: oklch(0.21 0.01 286);
+	--color-ui-950: oklch(0.14 0 286);
+
+	--color-accent-50: oklch(0.97 0.01 255);
+	--color-accent-100: oklch(0.93 0.03 256);
+	--color-accent-200: oklch(0.88 0.06 254);
+	--color-accent-300: oklch(0.81 0.1 252);
+	--color-accent-400: oklch(0.71 0.14 255);
+	--color-accent-500: oklch(0.62 0.19 260);
+	--color-accent-600: oklch(0.55 0.22 263);
+	--color-accent-700: oklch(0.49 0.22 264);
+	--color-accent-800: oklch(0.42 0.18 266);
+	--color-accent-900: oklch(0.38 0.14 266);
+	--color-accent-950: oklch(0.28 0.09 268);
+
+	--leading-heading: 1.15;
+	--leading-text: 1.5;
+}
+
+[data-theme='light'] {
+	color-scheme: light;
+}
+
+[data-theme='dark'] {
+	color-scheme: dark;
+}
