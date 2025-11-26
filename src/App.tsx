@@ -9,7 +9,7 @@ import CategoriesPage from '@/pages/CategoriesPage'
 
 export default function App() {
 	return (
-		<div className="font-inter text-ui-950 bg-ui-50 leading-text antialiased">
+		<div className="font-inter text-ui-950 bg-ui-0 leading-text antialiased">
 			<BrowserRouter>
 				<Routes>
 					<Route element={<AppLayout />}>
