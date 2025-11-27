@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+
+import RegisterForm from '@/features/auth/RegisterForm'
 import Logo from '@/ui/Logo'
 
 export default function RegisterPage() {
@@ -22,24 +22,8 @@ export default function RegisterPage() {
 							<h1 className="text-2xl font-semibold">Create an account</h1>
 							<p className="text-ui-500 text-sm">Enter your details below to create your account</p>
 						</div>
-						<form className="flex flex-col gap-6">
-							<div className="flex flex-col gap-5">
-								<div className="flex flex-col gap-3">
-									<Label>Full Name</Label>
-									<Input placeholder="John Doe" />
-								</div>
-								<div className="flex flex-col gap-3">
-									<Label>Email</Label>
-									<Input placeholder="johndoe@gmail.com" />
-								</div>
-								<div className="flex flex-col gap-3">
-									<Label>Password</Label>
-									<Input placeholder="Password" />
-								</div>
-							</div>
 
-							<Button>Sign Up</Button>
-						</form>
+						<RegisterForm />
 
 						<p className="text-ui-500 px-6 text-center text-sm">
 							By clicking continue, you agree to our Terms of Service and Privacy Policy.

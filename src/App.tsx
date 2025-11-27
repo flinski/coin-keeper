@@ -2,6 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import AppLayout from '@/ui/AppLayout'
+import ProtectedRoute from '@/ui/ProtectedRoute'
+
 import DashboardPage from '@/pages/DashboardPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import TransactionsPage from '@/pages/TransactionsPage'
@@ -18,7 +20,13 @@ export default function App() {
 			<QueryClientProvider client={queryClient}>
 				<BrowserRouter>
 					<Routes>
-						<Route element={<AppLayout />}>
+						<Route
+							element={
+								<ProtectedRoute>
+									<AppLayout />
+								</ProtectedRoute>
+							}
+						>
 							<Route index element={<Navigate replace to="dashboard" />} />
 							<Route path="dashboard" element={<DashboardPage />} />
 							<Route path="transactions" element={<TransactionsPage />} />
