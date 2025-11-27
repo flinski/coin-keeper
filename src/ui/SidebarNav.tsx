@@ -8,7 +8,6 @@ const links = [
 		icon: LifeBuoy,
 		path: '/dashboard',
 	},
-
 	{
 		text: 'Accounts',
 		icon: Wallet,

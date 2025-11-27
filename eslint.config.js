@@ -6,6 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import pluginQuery from '@tanstack/eslint-plugin-query'
 
 export default defineConfig([
 	globalIgnores(['dist']),
@@ -22,6 +23,12 @@ export default defineConfig([
 			globals: globals.browser,
 		},
 	},
+	{
+		rules: {
+			'react-refresh/only-export-components': 'off',
+		},
+	},
 	eslintConfigPrettier,
 	eslintPluginPrettierRecommended,
+	...pluginQuery.configs['flat/recommended'],
 ])

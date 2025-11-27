@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import AppLayout from '@/ui/AppLayout'
 import DashboardPage from '@/pages/DashboardPage'
@@ -6,22 +7,30 @@ import NotFoundPage from '@/pages/NotFoundPage'
 import TransactionsPage from '@/pages/TransactionsPage'
 import AccountsPage from '@/pages/AccountsPage'
 import CategoriesPage from '@/pages/CategoriesPage'
+import LoginPage from '@/pages/LoginPage'
+import RegisterPage from '@/pages/RegisterPage'
+
+const queryClient = new QueryClient()
 
 export default function App() {
 	return (
 		<div className="font-inter text-ui-950 bg-ui-0 leading-text antialiased">
-			<BrowserRouter>
-				<Routes>
-					<Route element={<AppLayout />}>
-						<Route index element={<Navigate replace to="dashboard" />} />
-						<Route path="dashboard" element={<DashboardPage />} />
-						<Route path="transactions" element={<TransactionsPage />} />
-						<Route path="accounts" element={<AccountsPage />} />
-						<Route path="categories" element={<CategoriesPage />} />
-					</Route>
-					<Route path="*" element={<NotFoundPage />} />
-				</Routes>
-			</BrowserRouter>
+			<QueryClientProvider client={queryClient}>
+				<BrowserRouter>
+					<Routes>
+						<Route element={<AppLayout />}>
+							<Route index element={<Navigate replace to="dashboard" />} />
+							<Route path="dashboard" element={<DashboardPage />} />
+							<Route path="transactions" element={<TransactionsPage />} />
+							<Route path="accounts" element={<AccountsPage />} />
+							<Route path="categories" element={<CategoriesPage />} />
+						</Route>
+						<Route path="login" element={<LoginPage />} />
+						<Route path="register" element={<RegisterPage />} />
+						<Route path="*" element={<NotFoundPage />} />
+					</Routes>
+				</BrowserRouter>
+			</QueryClientProvider>
 		</div>
 	)
 }
