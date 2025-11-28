@@ -1,6 +1,6 @@
+import { useEffect } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getCurrentUser } from '@/services/apiAuth'
-import { useEffect } from 'react'
 import supabase from '@/services/supabase'
 
 export function useUser() {
