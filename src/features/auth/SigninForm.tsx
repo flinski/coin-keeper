@@ -2,36 +2,29 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { useSignup } from '@/features/auth/useSignup'
+import { useSignin } from '@/features/auth/useSignin'
 import { Spinner } from '@/components/ui/spinner'
 
 type Inputs = {
-	fullName: string
 	email: string
 	password: string
 }
 
-export default function RegisterForm() {
+export default function SigninForm() {
 	const { register, handleSubmit } = useForm<Inputs>()
-	const { signup, isLoading } = useSignup()
+	const { signin, isLoading } = useSignin()
 
-	const onSubmit: SubmitHandler<Inputs> = (data) => {
-		console.log('Register Inputs:', data)
-		signup(data)
+	const onSubmit: SubmitHandler<Inputs> = ({ email, password }) => {
+		console.log('Login Inputs:', { email, password })
+
+		if (!email || !password) return
+
+		signin({ email, password })
 	}
 
 	return (
 		<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
 			<div className="flex flex-col gap-5">
-				<div className="flex flex-col gap-3">
-					<Label>Full Name</Label>
-					<Input
-						type="text"
-						placeholder="John Doe"
-						disabled={isLoading}
-						{...register('fullName', { required: 'This field is required' })}
-					/>
-				</div>
 				<div className="flex flex-col gap-3">
 					<Label>Email</Label>
 					<Input
@@ -55,10 +48,6 @@ export default function RegisterForm() {
 						disabled={isLoading}
 						{...register('password', {
 							required: 'This field is required',
-							minLength: {
-								value: 6,
-								message: 'Password needs a minimum of 6 characters',
-							},
 						})}
 					/>
 				</div>
@@ -68,10 +57,10 @@ export default function RegisterForm() {
 				{isLoading ? (
 					<div className="flex items-center gap-2">
 						<Spinner className="text-ui-50" />
-						<span>Creating...</span>
+						<span>Loading...</span>
 					</div>
 				) : (
-					'Sign Up'
+					'Sign In'
 				)}
 			</Button>
 		</form>

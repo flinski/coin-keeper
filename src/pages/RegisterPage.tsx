@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 
 import RegisterForm from '@/features/auth/RegisterForm'
 import Logo from '@/ui/Logo'
+import { Link } from 'react-router'
 
 export default function RegisterPage() {
 	return (
@@ -11,9 +12,11 @@ export default function RegisterPage() {
 			</div>
 			<div className="flex basis-1/2 flex-col p-8">
 				<div className="flex justify-end">
-					<Button variant="ghost" className="hover:bg-ui-100">
-						Sign In
-					</Button>
+					<Link to="/login">
+						<Button variant="ghost" className="hover:bg-ui-100">
+							Sign In
+						</Button>
+					</Link>
 				</div>
 
 				<div className="flex grow flex-col justify-center">

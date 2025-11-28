@@ -9,6 +9,11 @@ const links = [
 		path: '/dashboard',
 	},
 	{
+		text: 'Transactions',
+		icon: Banknote,
+		path: '/transactions',
+	},
+	{
 		text: 'Accounts',
 		icon: Wallet,
 		path: '/accounts',
@@ -17,11 +22,6 @@ const links = [
 		text: 'Categories',
 		icon: Rows3,
 		path: '/categories',
-	},
-	{
-		text: 'Transactions',
-		icon: Banknote,
-		path: '/transactions',
 	},
 ]
 
