@@ -1,7 +1,7 @@
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import Logo from '@/ui/Logo'
-import LoginForm from '@/features/auth/SigninForm'
+import SigninForm from '@/features/auth/SigninForm'
 
 export default function LoginPage() {
 	return (
@@ -27,7 +27,7 @@ export default function LoginPage() {
 							</p>
 						</div>
 
-						<LoginForm />
+						<SigninForm />
 					</div>
 				</div>
 			</div>
