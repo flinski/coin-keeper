@@ -1,6 +1,6 @@
 import supabase from '@/services/supabase'
 
-type Account = {
+export type Account = {
 	id: string
 	created_at: string
 	user_id: string
@@ -44,7 +44,49 @@ export async function createAccount({ name, balance }: AccountCreation) {
 		throw new Error(error.message)
 	}
 
-	console.log(data)
+	const account: Account = data
 
-	return data
+	return account
+}
+
+type AccountUpdate = {
+	id: string
+	name: string
+	balance: number
+}
+
+export async function editAccount({ id, name, balance }: AccountUpdate) {
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	if (!user) {
+		throw new Error('User is not authenticated')
+	}
+
+	const { data, error } = await supabase
+		.from('accounts')
+		.update({ name, balance })
+		.eq('id', id)
+		.eq('user_id', user.id)
+		.select()
+		.single()
+
+	if (error) {
+		console.error(error.message)
+		throw new Error(error.message)
+	}
+
+	const account: Account = data
+
+	return account
+}
+
+export async function deleteAccount(id: string) {
+	const { error } = await supabase.from('accounts').delete().eq('id', id)
+
+	if (error) {
+		console.error(error.message)
+		throw new Error(error.message)
+	}
 }

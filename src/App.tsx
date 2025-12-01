@@ -17,30 +17,28 @@ const queryClient = new QueryClient()
 
 export default function App() {
 	return (
-		<div className="font-inter text-ui-950 bg-ui-0 leading-text antialiased">
-			<QueryClientProvider client={queryClient}>
-				<BrowserRouter>
-					<Routes>
-						<Route
-							element={
-								<ProtectedRoute>
-									<AppLayout />
-								</ProtectedRoute>
-							}
-						>
-							<Route index element={<Navigate replace to="dashboard" />} />
-							<Route path="dashboard" element={<DashboardPage />} />
-							<Route path="transactions" element={<TransactionsPage />} />
-							<Route path="accounts" element={<AccountsPage />} />
-							<Route path="categories" element={<CategoriesPage />} />
-						</Route>
-						<Route path="login" element={<LoginPage />} />
-						<Route path="register" element={<RegisterPage />} />
-						<Route path="*" element={<NotFoundPage />} />
-					</Routes>
-				</BrowserRouter>
-				<ReactQueryDevtools initialIsOpen={false} />
-			</QueryClientProvider>
-		</div>
+		<QueryClientProvider client={queryClient}>
+			<BrowserRouter>
+				<Routes>
+					<Route
+						element={
+							<ProtectedRoute>
+								<AppLayout />
+							</ProtectedRoute>
+						}
+					>
+						<Route index element={<Navigate replace to="dashboard" />} />
+						<Route path="dashboard" element={<DashboardPage />} />
+						<Route path="transactions" element={<TransactionsPage />} />
+						<Route path="accounts" element={<AccountsPage />} />
+						<Route path="categories" element={<CategoriesPage />} />
+					</Route>
+					<Route path="login" element={<LoginPage />} />
+					<Route path="register" element={<RegisterPage />} />
+					<Route path="*" element={<NotFoundPage />} />
+				</Routes>
+			</BrowserRouter>
+			<ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
 	)
 }
