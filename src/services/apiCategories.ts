@@ -1,28 +1,24 @@
 import supabase from '@/services/supabase'
 
-export type Account = {
+export type Category = {
 	id: string
 	created_at: string
 	user_id: string
 	name: string
-	balance: number
-	color: string
+	type: string
 }
 
-type AccountCreation = {
+type CategoryCreation = {
 	name: string
-	balance: number
-	color: string
+	type: string
 }
 
-type AccountUpdate = {
+type CategoryUpdate = {
 	id: string
 	name: string
-	balance: number
-	color: string
 }
 
-export async function getAccounts() {
+export async function getCategories() {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
@@ -32,7 +28,7 @@ export async function getAccounts() {
 	}
 
 	const { data, error } = await supabase
-		.from('accounts')
+		.from('categories')
 		.select('*')
 		.eq('user_id', user.id)
 		.order('created_at', { ascending: true })
@@ -42,10 +38,10 @@ export async function getAccounts() {
 		throw new Error(error.message)
 	}
 
-	return data as Account[]
+	return data as Category[]
 }
 
-export async function createAccount({ name, balance, color }: AccountCreation) {
+export async function createCategory({ name, type }: CategoryCreation) {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
@@ -55,8 +51,8 @@ export async function createAccount({ name, balance, color }: AccountCreation) {
 	}
 
 	const { data, error } = await supabase
-		.from('accounts')
-		.insert({ user_id: user.id, name, balance, color })
+		.from('categories')
+		.insert({ user_id: user.id, name, type })
 		.select()
 		.single()
 
@@ -65,10 +61,10 @@ export async function createAccount({ name, balance, color }: AccountCreation) {
 		throw new Error(error.message)
 	}
 
-	return data as Account
+	return data as Category
 }
 
-export async function editAccount({ id, name, balance, color }: AccountUpdate) {
+export async function editCategory({ id, name }: CategoryUpdate) {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
@@ -78,8 +74,8 @@ export async function editAccount({ id, name, balance, color }: AccountUpdate) {
 	}
 
 	const { data, error } = await supabase
-		.from('accounts')
-		.update({ name, balance, color })
+		.from('categories')
+		.update({ name })
 		.eq('id', id)
 		.eq('user_id', user.id)
 		.select()
@@ -90,10 +86,10 @@ export async function editAccount({ id, name, balance, color }: AccountUpdate) {
 		throw new Error(error.message)
 	}
 
-	return data as Account
+	return data as Category
 }
 
-export async function deleteAccount(id: string) {
+export async function deleteCategory(id: string) {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
@@ -102,34 +98,10 @@ export async function deleteAccount(id: string) {
 		throw new Error('User is not authenticated')
 	}
 
-	const { error } = await supabase.from('accounts').delete().eq('id', id).eq('user_id', user.id)
+	const { error } = await supabase.from('categories').delete().eq('id', id).eq('user_id', user.id)
 
 	if (error) {
 		console.error(error.message)
 		throw new Error(error.message)
 	}
-}
-
-export async function getAccount(id: string) {
-	const {
-		data: { user },
-	} = await supabase.auth.getUser()
-
-	if (!user) {
-		throw new Error('User is not authenticated')
-	}
-
-	const { data, error } = await supabase
-		.from('accounts')
-		.select('*')
-		.eq('id', id)
-		.eq('user_id', user.id)
-		.single()
-
-	if (error) {
-		console.error(error.message)
-		throw new Error(error.message)
-	}
-
-	return data as Account
 }

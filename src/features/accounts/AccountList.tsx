@@ -9,7 +9,7 @@ export default function AccountList({ accounts }: AccountListProps) {
 	return (
 		<ul className="grid grid-cols-3 gap-6">
 			{accounts.map((account) => (
-				<AccountItem account={account} />
+				<AccountItem key={account.id} account={account} />
 			))}
 		</ul>
 	)

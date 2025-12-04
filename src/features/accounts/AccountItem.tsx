@@ -32,6 +32,8 @@ import {
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { useEditAccount } from '@/features/accounts/useEditAccount'
+import { cn, formatCurrency } from '@/lib/utils'
+import { colorMap600, colorMap700, colorMap800, colors } from '@/lib/constants'
 
 type Inputs = {
 	name: string
@@ -43,17 +45,20 @@ type AccountItemProps = {
 }
 
 export default function AccountItem({ account }: AccountItemProps) {
+	const { id, name, balance, color } = account
+
+	const [activeColor, setActiveColor] = useState(color)
 	const [openEdit, setOpenEdit] = useState(false)
 	const [openDelete, setOpenDelete] = useState(false)
 	const { register, handleSubmit } = useForm<Inputs>({
-		defaultValues: { name: account.name, balance: String(account.balance) },
+		defaultValues: { name, balance: String(balance) },
 	})
 	const { editAccount, isLoading: isEditLoading } = useEditAccount()
 	const { deleteAccount, isLoading: isDeleteLoading } = useDeleteAccount()
 
 	const onSubmit: SubmitHandler<Inputs> = ({ name, balance }) => {
 		editAccount(
-			{ id: account.id, name, balance: Number(balance) },
+			{ id: account.id, name, balance: Number(balance), color: activeColor },
 			{
 				onSuccess: () => {
 					setOpenEdit(false)
@@ -64,14 +69,33 @@ export default function AccountItem({ account }: AccountItemProps) {
 
 	return (
 		<>
-			<li key={account.id}>
-				<AspectRatio ratio={2 / 1} className="rounded-xl border p-6 shadow-sm">
-					<header className="mb-4 flex items-center justify-between text-2xl font-semibold">
-						<div>{account.name}</div>
+			<li key={id}>
+				<AspectRatio
+					ratio={1.586 / 1}
+					className={cn(
+						'text-ui-50 relative flex flex-col gap-2 overflow-hidden rounded-2xl p-6 shadow-lg',
+						colorMap800[color]
+					)}
+				>
+					<div
+						className={cn(
+							'absolute top-[-50%] right-[20%] size-120 rounded-full',
+							colorMap700[color]
+						)}
+					></div>
+					<div
+						className={cn(
+							'bg-accent-600 absolute top-[-35%] right-[25%] size-110 rounded-full',
+							colorMap600[color]
+						)}
+					></div>
+
+					<header className="relative flex items-center justify-between text-2xl">
+						<div className="text-lg">{name}</div>
 						<DropdownMenu modal={false}>
 							<DropdownMenuTrigger asChild>
-								<Button variant="ghost" size="icon">
-									<EllipsisVertical />
+								<Button variant="ghost" size="icon" className="hover:bg-ui-0/10 hover:text-ui-50">
+									<EllipsisVertical className="size-5" />
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent className="">
@@ -86,7 +110,12 @@ export default function AccountItem({ account }: AccountItemProps) {
 							</DropdownMenuContent>
 						</DropdownMenu>
 					</header>
-					<div className="text-4xl">{account.balance}$</div>
+					<p className="relative grow text-4xl font-semibold tabular-nums">
+						{formatCurrency(balance)}
+					</p>
+					<footer className="relative font-medium tracking-wider uppercase">
+						Vladislav Flinski
+					</footer>
 				</AspectRatio>
 			</li>
 
@@ -115,6 +144,24 @@ export default function AccountItem({ account }: AccountItemProps) {
 									disabled={isEditLoading}
 									{...register('balance', { required: 'This field is required' })}
 								/>
+							</div>
+							<div className="flex flex-col gap-2">
+								<Label className="text-base">Color</Label>
+								<ul className="flex flex-wrap justify-center gap-2">
+									{colors.map((color) => {
+										return (
+											<li
+												key={color}
+												onClick={() => setActiveColor(color)}
+												className={cn(
+													'size-8 cursor-pointer rounded-full',
+													colorMap600[color],
+													activeColor === color && 'outline-ui-900 outline-3'
+												)}
+											></li>
+										)
+									})}
+								</ul>
 							</div>
 						</div>
 						<DialogFooter>

@@ -3,8 +3,8 @@ import SidebarNav from '@/ui/SidebarNav'
 
 export default function Sidebar() {
 	return (
-		<aside className="bg-ui-50 border-ui-200 flex w-[260px] shrink-0 flex-col border-r">
-			<div className="border-b">
+		<aside className="bg-ui-0 border-ui-200 row-[-1/1] flex flex-col border-r">
+			<div>
 				<Logo />
 			</div>
 			<SidebarNav />

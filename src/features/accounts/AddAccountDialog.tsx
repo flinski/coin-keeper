@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import { Plus } from 'lucide-react'
 import {
 	Dialog,
 	DialogClose,
@@ -14,6 +13,8 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { useCreateAccount } from '@/features/accounts/useCreateAccount'
+import { cn } from '@/lib/utils'
+import { colorMap600, colors } from '@/lib/constants'
 
 type Inputs = {
 	name: string
@@ -22,12 +23,13 @@ type Inputs = {
 
 export default function AddAccountDialog() {
 	const [open, setOpen] = useState(false)
+	const [activeColor, setActiveColor] = useState('emerald')
 	const { register, handleSubmit, reset } = useForm<Inputs>()
 	const { createAccount, isLoading } = useCreateAccount()
 
 	const onSubmit: SubmitHandler<Inputs> = ({ name, balance }) => {
 		createAccount(
-			{ name, balance: Number(balance) },
+			{ name, balance: Number(balance), color: activeColor },
 			{
 				onSuccess: () => {
 					reset()
@@ -40,11 +42,11 @@ export default function AddAccountDialog() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline">
-					<Plus />
+				<Button>
 					<span>Add account</span>
 				</Button>
 			</DialogTrigger>
+
 			<DialogContent>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
@@ -53,6 +55,7 @@ export default function AddAccountDialog() {
 					<DialogHeader>
 						<DialogTitle className="text-xl font-semibold">Add account</DialogTitle>
 					</DialogHeader>
+
 					<div className="flex flex-col gap-5">
 						<div className="flex flex-col gap-2">
 							<Label className="text-base">Account name</Label>
@@ -70,7 +73,26 @@ export default function AddAccountDialog() {
 								{...register('balance', { required: 'This field is required' })}
 							/>
 						</div>
+						<div className="flex flex-col gap-2">
+							<Label className="text-base">Color</Label>
+							<ul className="flex flex-wrap justify-center gap-2">
+								{colors.map((color) => {
+									return (
+										<li
+											key={color}
+											onClick={() => setActiveColor(color)}
+											className={cn(
+												'size-8 cursor-pointer rounded-full',
+												colorMap600[color],
+												activeColor === color && 'outline-ui-900 outline-3'
+											)}
+										></li>
+									)
+								})}
+							</ul>
+						</div>
 					</div>
+
 					<DialogFooter>
 						<DialogClose asChild>
 							<Button variant="outline" disabled={isLoading}>
