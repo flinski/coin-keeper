@@ -33,7 +33,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { useEditAccount } from '@/features/accounts/useEditAccount'
 import { cn, formatCurrency } from '@/lib/utils'
-import { colorMap600, colorMap700, colorMap800, colors } from '@/lib/constants'
+import { bgColorMap600, colors } from '@/lib/constants'
 
 type Inputs = {
 	name: string
@@ -42,9 +42,10 @@ type Inputs = {
 
 type AccountItemProps = {
 	account: Account
+	username: string
 }
 
-export default function AccountItem({ account }: AccountItemProps) {
+export default function AccountItem({ account, username }: AccountItemProps) {
 	const { id, name, balance, color } = account
 
 	const [activeColor, setActiveColor] = useState(color)
@@ -74,38 +75,28 @@ export default function AccountItem({ account }: AccountItemProps) {
 					ratio={1.586 / 1}
 					className={cn(
 						'text-ui-50 relative flex flex-col gap-2 overflow-hidden rounded-2xl p-6 shadow-lg',
-						colorMap800[color]
+						bgColorMap600[color]
 					)}
 				>
-					<div
-						className={cn(
-							'absolute top-[-50%] right-[20%] size-120 rounded-full',
-							colorMap700[color]
-						)}
-					></div>
-					<div
-						className={cn(
-							'bg-accent-600 absolute top-[-35%] right-[25%] size-110 rounded-full',
-							colorMap600[color]
-						)}
-					></div>
-
 					<header className="relative flex items-center justify-between text-2xl">
 						<div className="text-lg">{name}</div>
 						<DropdownMenu modal={false}>
 							<DropdownMenuTrigger asChild>
-								<Button variant="ghost" size="icon" className="hover:bg-ui-0/10 hover:text-ui-50">
+								<Button variant="ghost" size="icon" className="hover:bg-ui-50/10 hover:text-ui-50">
 									<EllipsisVertical className="size-5" />
 								</Button>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent className="">
-								<DropdownMenuItem onClick={() => setOpenEdit(true)}>
-									<Pencil size={16} />
-									<span>Edit</span>
+							<DropdownMenuContent>
+								<DropdownMenuItem onClick={() => setOpenEdit(true)} className="focus:bg-accent-100">
+									<Pencil size={16} className="text-ui-950" />
+									<span className="text-base">Edit</span>
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={() => setOpenDelete(true)}>
-									<Trash2 size={16} />
-									<span>Delete</span>
+								<DropdownMenuItem
+									onClick={() => setOpenDelete(true)}
+									className="focus:bg-accent-100"
+								>
+									<Trash2 size={16} className="text-ui-950" />
+									<span className="text-base">Delete</span>
 								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
@@ -113,9 +104,7 @@ export default function AccountItem({ account }: AccountItemProps) {
 					<p className="relative grow text-4xl font-semibold tabular-nums">
 						{formatCurrency(balance)}
 					</p>
-					<footer className="relative font-medium tracking-wider uppercase">
-						Vladislav Flinski
-					</footer>
+					<footer className="relative font-medium tracking-wider uppercase">{username}</footer>
 				</AspectRatio>
 			</li>
 
@@ -123,7 +112,7 @@ export default function AccountItem({ account }: AccountItemProps) {
 				<DialogContent>
 					<form
 						onSubmit={handleSubmit(onSubmit)}
-						className="font-inter text-ui-950 bg-ui-0 leading-text flex flex-col gap-6 antialiased"
+						className="font-inter text-ui-950 bg-ui-50 leading-text flex flex-col gap-6 antialiased"
 					>
 						<DialogHeader>
 							<DialogTitle className="text-xl font-semibold">Edit account</DialogTitle>
@@ -141,6 +130,7 @@ export default function AccountItem({ account }: AccountItemProps) {
 								<Label className="text-base">Amount</Label>
 								<Input
 									type="number"
+									step={0.01}
 									disabled={isEditLoading}
 									{...register('balance', { required: 'This field is required' })}
 								/>
@@ -155,7 +145,7 @@ export default function AccountItem({ account }: AccountItemProps) {
 												onClick={() => setActiveColor(color)}
 												className={cn(
 													'size-8 cursor-pointer rounded-full',
-													colorMap600[color],
+													bgColorMap600[color],
 													activeColor === color && 'outline-ui-900 outline-3'
 												)}
 											></li>
@@ -170,7 +160,11 @@ export default function AccountItem({ account }: AccountItemProps) {
 									Cancel
 								</Button>
 							</DialogClose>
-							<Button type="submit" disabled={isEditLoading}>
+							<Button
+								type="submit"
+								disabled={isEditLoading}
+								className="bg-accent-600 hover:bg-accent-600/90"
+							>
 								Save changes
 							</Button>
 						</DialogFooter>
@@ -183,13 +177,18 @@ export default function AccountItem({ account }: AccountItemProps) {
 					<AlertDialogHeader>
 						<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
 						<AlertDialogDescription>
-							This action cannot be undone. This will permanently delete {account.name} account and
-							remove your data from our servers.
+							This will permanently delete{' '}
+							<span className="text-ui-950 font-medium">"{account.name}"</span> account and remove
+							your data from our servers.
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={isDeleteLoading}>Cancel</AlertDialogCancel>
-						<AlertDialogAction disabled={isDeleteLoading} onClick={() => deleteAccount(account.id)}>
+						<AlertDialogAction
+							disabled={isDeleteLoading}
+							onClick={() => deleteAccount(account.id)}
+							className="bg-red-600 hover:bg-red-600/90"
+						>
 							Continue
 						</AlertDialogAction>
 					</AlertDialogFooter>

@@ -3,37 +3,46 @@ import AccountList from '@/features/accounts/AccountList'
 import AccountTotal from '@/features/accounts/AccountTotal'
 import AddAccountDialog from '@/features/accounts/AddAccountDialog'
 import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
+import ErrorMessage from '@/ui/ErrorMessage'
+import Container from '@/ui/Container'
+import PageHeader from '@/ui/PageHeader'
 
 export default function AccountsPage() {
 	const { accounts, error, isLoading } = useAccounts()
 
 	if (isLoading) {
-		return <div>Loading...</div>
+		return (
+			<div className="flex h-full items-center justify-center">
+				<Spinner className="text-accent-600 size-12" />
+			</div>
+		)
 	}
 
 	if (error) {
-		return <div>Error: {error.message}</div>
+		return <ErrorMessage message={`Error: ${error.message}`} screen={true} />
 	}
 
 	if (!accounts) {
-		return <div>Accounts not found</div>
+		return <ErrorMessage message="Something went wrong. Please try again later." screen={true} />
 	}
 
 	console.log('accounts:', accounts)
 
 	return (
 		<div>
-			<div className="mx-auto flex max-w-7xl flex-col gap-12 p-8">
+			<PageHeader title="Your accounts">
+				<div className="flex items-center gap-3">
+					<Button variant="outline">Sort</Button>
+					<AddAccountDialog />
+				</div>
+			</PageHeader>
+			<Container className="flex flex-col gap-12">
 				<AccountTotal accounts={accounts} />
 				<div className="flex flex-col gap-6">
-					<div className="text-4xl font-semibold">Your accounts</div>
-					<div className="flex items-center justify-between">
-						<Button variant="outline">Sort</Button>
-						<AddAccountDialog />
-					</div>
 					<AccountList accounts={accounts} />
 				</div>
-			</div>
+			</Container>
 		</div>
 	)
 }

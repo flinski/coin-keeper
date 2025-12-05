@@ -6,16 +6,19 @@ export type Category = {
 	user_id: string
 	name: string
 	type: string
+	color: string
 }
 
 type CategoryCreation = {
 	name: string
 	type: string
+	color: string
 }
 
 type CategoryUpdate = {
 	id: string
 	name: string
+	color: string
 }
 
 export async function getCategories() {
@@ -41,7 +44,7 @@ export async function getCategories() {
 	return data as Category[]
 }
 
-export async function createCategory({ name, type }: CategoryCreation) {
+export async function createCategory({ name, type, color }: CategoryCreation) {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
@@ -52,7 +55,7 @@ export async function createCategory({ name, type }: CategoryCreation) {
 
 	const { data, error } = await supabase
 		.from('categories')
-		.insert({ user_id: user.id, name, type })
+		.insert({ user_id: user.id, name, type, color })
 		.select()
 		.single()
 

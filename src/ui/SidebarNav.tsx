@@ -28,7 +28,7 @@ const links = [
 export default function SidebarNav() {
 	return (
 		<nav className="grow">
-			<p className="text-ui-500 px-4 pt-4 text-xs font-medium tracking-wide uppercase">Menu</p>
+			<p className="text-ui-950/50 px-4 pt-4 text-xs font-medium tracking-wide uppercase">Menu</p>
 			<ul className="p-2">
 				{links.map(({ text, icon, path }) => {
 					const Icon = icon
@@ -39,8 +39,8 @@ export default function SidebarNav() {
 								to={path}
 								className={({ isActive }) =>
 									cn(
-										'hover:bg-accent-50 flex items-center gap-2 rounded-md p-2 leading-tight',
-										isActive && 'text-accent-600'
+										'hover:bg-accent-100 flex items-center gap-2 rounded-md p-2 leading-tight',
+										isActive && 'bg-accent-600 text-ui-50 hover:bg-accent-600'
 									)
 								}
 							>

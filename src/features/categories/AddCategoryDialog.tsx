@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import {
 	Dialog,
 	DialogClose,
@@ -12,24 +12,27 @@ import {
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { useCreateAccount } from '@/features/accounts/useCreateAccount'
 import { cn } from '@/lib/utils'
 import { bgColorMap600, colors } from '@/lib/constants'
+import { useCreateCategory } from '@/features/categories/useCreateCategory'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 type Inputs = {
 	name: string
-	balance: string
+	type: string
 }
 
-export default function AddAccountDialog() {
+export default function AddCategoryDialog() {
 	const [open, setOpen] = useState(false)
 	const [activeColor, setActiveColor] = useState('emerald')
-	const { register, handleSubmit, reset } = useForm<Inputs>()
-	const { createAccount, isLoading } = useCreateAccount()
+	const { register, handleSubmit, reset, control } = useForm<Inputs>({
+		defaultValues: { type: 'expenses' },
+	})
+	const { createCategory, isLoading } = useCreateCategory()
 
-	const onSubmit: SubmitHandler<Inputs> = ({ name, balance }) => {
-		createAccount(
-			{ name, balance: Number(balance), color: activeColor },
+	const onSubmit: SubmitHandler<Inputs> = ({ name, type }) => {
+		createCategory(
+			{ name, type, color: activeColor },
 			{
 				onSuccess: () => {
 					reset()
@@ -42,8 +45,8 @@ export default function AddAccountDialog() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button className="bg-accent-600 hover:bg-accent-600/90">
-					<span>Add account</span>
+				<Button className="bg-accent-600 hover:bg-accent-600/90 h-auto py-3">
+					<span>Add category</span>
 				</Button>
 			</DialogTrigger>
 
@@ -53,24 +56,43 @@ export default function AddAccountDialog() {
 					className="font-inter text-ui-950 bg-ui-50 leading-text flex flex-col gap-6 antialiased"
 				>
 					<DialogHeader>
-						<DialogTitle className="text-xl font-semibold">Add account</DialogTitle>
+						<DialogTitle className="text-xl font-semibold">Add category</DialogTitle>
 					</DialogHeader>
 
 					<div className="flex flex-col gap-5">
 						<div className="flex flex-col gap-2">
-							<Label className="text-base">Account name</Label>
+							<Label className="text-base">Category name</Label>
 							<Input
 								type="text"
 								disabled={isLoading}
 								{...register('name', { required: 'This field is required' })}
 							/>
 						</div>
-						<div className="flex flex-col gap-2">
-							<Label className="text-base">Amount</Label>
-							<Input
-								type="number"
-								disabled={isLoading}
-								{...register('balance', { required: 'This field is required' })}
+						<div className="flex flex-col gap-3">
+							<Label className="text-base">Category type</Label>
+							<Controller
+								name="type"
+								control={control}
+								render={({ field }) => (
+									<RadioGroup
+										defaultValue="expenses"
+										value={field.value}
+										onValueChange={field.onChange}
+									>
+										<div className="flex items-center gap-2">
+											<RadioGroupItem value="income" id="income" />
+											<Label htmlFor="income" className="cursor-pointer">
+												Income
+											</Label>
+										</div>
+										<div className="flex items-center gap-2">
+											<RadioGroupItem value="expenses" id="expenses" />
+											<Label htmlFor="expenses" className="cursor-pointer">
+												Expenses
+											</Label>
+										</div>
+									</RadioGroup>
+								)}
 							/>
 						</div>
 						<div className="flex flex-col gap-2">

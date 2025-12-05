@@ -1,3 +1,5 @@
+import AddCategoryDialog from '@/features/categories/AddCategoryDialog'
+import CategoryList from '@/features/categories/CategoryList'
 import { useCategories } from '@/features/categories/useCategories'
 
 export default function CategoriesPage() {
@@ -21,25 +23,22 @@ export default function CategoriesPage() {
 	const expensesCategories = categories.filter((category) => category.type === 'expenses')
 
 	return (
-		<div className="flex h-screen flex-col">
-			<div className="border-ui-200 flex items-center border-b p-2">Your Categories</div>
-			<div className="grow overflow-auto">
-				<div className="mx-auto flex max-w-[1440px] flex-col gap-6 p-8">
-					<div>
-						<div>Income</div>
-						<ul>
-							{incomeCategories.map((category) => (
-								<li>{category.name}</li>
-							))}
-						</ul>
+		<div>
+			<div className="mx-auto flex max-w-7xl flex-col gap-12 p-8">
+				<div className="flex flex-col gap-6">
+					<div className="flex items-center justify-between">
+						<div></div>
+						<AddCategoryDialog />
 					</div>
-					<div>
-						<div>Expenses</div>
-						<ul>
-							{expensesCategories.map((category) => (
-								<li>{category.name}</li>
-							))}
-						</ul>
+					<div className="flex">
+						<div className="flex basis-[50%] flex-col gap-6">
+							<div className="text-4xl font-semibold">Income</div>
+							<CategoryList categories={incomeCategories} />
+						</div>
+						<div className="flex basis-[50%] flex-col gap-6">
+							<div className="text-4xl font-semibold">Expenses</div>
+							<CategoryList categories={expensesCategories} />
+						</div>
 					</div>
 				</div>
 			</div>

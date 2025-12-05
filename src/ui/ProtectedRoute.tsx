@@ -12,7 +12,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 	if (isLoading) {
 		return (
 			<div className="flex h-screen w-full items-center justify-center">
-				<Spinner className="text-ui-500 size-8" />
+				<Spinner className="text-accent-600 size-12" />
 			</div>
 		)
 	}
