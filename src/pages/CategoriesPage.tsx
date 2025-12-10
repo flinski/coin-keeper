@@ -1,20 +1,28 @@
+import { Spinner } from '@/components/ui/spinner'
 import AddCategoryDialog from '@/features/categories/AddCategoryDialog'
 import CategoryList from '@/features/categories/CategoryList'
 import { useCategories } from '@/features/categories/useCategories'
+import Container from '@/ui/Container'
+import ErrorMessage from '@/ui/ErrorMessage'
+import PageHeader from '@/ui/PageHeader'
 
 export default function CategoriesPage() {
 	const { categories, error, isLoading } = useCategories()
 
 	if (isLoading) {
-		return <div>Loading...</div>
+		return (
+			<div className="flex h-full items-center justify-center">
+				<Spinner className="text-accent-600 size-12" />
+			</div>
+		)
 	}
 
 	if (error) {
-		return <div>Error: {error.message}</div>
+		return <ErrorMessage message={`Error: ${error.message}`} screen={true} />
 	}
 
 	if (!categories) {
-		return <div>Categories not found</div>
+		return <ErrorMessage message="Something went wrong. Please try again later." screen={true} />
 	}
 
 	console.log('categories:', categories)
@@ -24,24 +32,21 @@ export default function CategoriesPage() {
 
 	return (
 		<div>
-			<div className="mx-auto flex max-w-7xl flex-col gap-12 p-8">
-				<div className="flex flex-col gap-6">
-					<div className="flex items-center justify-between">
-						<div></div>
-						<AddCategoryDialog />
+			<PageHeader title="Your categories">
+				<AddCategoryDialog />
+			</PageHeader>
+			<Container>
+				<div className="flex">
+					<div className="flex basis-[50%] flex-col gap-4">
+						<div className="text-4xl font-semibold">Income</div>
+						<CategoryList categories={incomeCategories} />
 					</div>
-					<div className="flex">
-						<div className="flex basis-[50%] flex-col gap-6">
-							<div className="text-4xl font-semibold">Income</div>
-							<CategoryList categories={incomeCategories} />
-						</div>
-						<div className="flex basis-[50%] flex-col gap-6">
-							<div className="text-4xl font-semibold">Expenses</div>
-							<CategoryList categories={expensesCategories} />
-						</div>
+					<div className="flex basis-[50%] flex-col gap-4">
+						<div className="text-4xl font-semibold">Expenses</div>
+						<CategoryList categories={expensesCategories} />
 					</div>
 				</div>
-			</div>
+			</Container>
 		</div>
 	)
 }

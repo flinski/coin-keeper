@@ -12,10 +12,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
-import { bgColorMap600, colors } from '@/lib/constants'
-import { useCreateCategory } from '@/features/categories/useCreateCategory'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { useCreateCategory } from '@/features/categories/useCreateCategory'
+import { bgColorMap600, colors } from '@/lib/constants'
+import { cn } from '@/lib/utils'
+import CategoryIconSectionList from '@/features/categories/CategoryIconSectionList'
 
 type Inputs = {
 	name: string
@@ -24,7 +25,8 @@ type Inputs = {
 
 export default function AddCategoryDialog() {
 	const [open, setOpen] = useState(false)
-	const [activeColor, setActiveColor] = useState('emerald')
+	const [selectedIcon, setSelectedIcon] = useState('badge-cent')
+	const [selectedColor, setSelectedColor] = useState('emerald')
 	const { register, handleSubmit, reset, control } = useForm<Inputs>({
 		defaultValues: { type: 'expenses' },
 	})
@@ -32,7 +34,7 @@ export default function AddCategoryDialog() {
 
 	const onSubmit: SubmitHandler<Inputs> = ({ name, type }) => {
 		createCategory(
-			{ name, type, color: activeColor },
+			{ name, type, icon: selectedIcon, color: selectedColor },
 			{
 				onSuccess: () => {
 					reset()
@@ -45,7 +47,7 @@ export default function AddCategoryDialog() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button className="bg-accent-600 hover:bg-accent-600/90 h-auto py-3">
+				<Button className="bg-accent-600 hover:bg-accent-600/90">
 					<span>Add category</span>
 				</Button>
 			</DialogTrigger>
@@ -95,6 +97,14 @@ export default function AddCategoryDialog() {
 								)}
 							/>
 						</div>
+						<div className="flex flex-col gap-3">
+							<Label className="text-base">Icons</Label>
+							<CategoryIconSectionList
+								selectedColor={selectedColor}
+								selectedIcon={selectedIcon}
+								onSelectedIcon={setSelectedIcon}
+							/>
+						</div>
 						<div className="flex flex-col gap-2">
 							<Label className="text-base">Color</Label>
 							<ul className="flex flex-wrap justify-center gap-2">
@@ -102,11 +112,11 @@ export default function AddCategoryDialog() {
 									return (
 										<li
 											key={color}
-											onClick={() => setActiveColor(color)}
+											onClick={() => setSelectedColor(color)}
 											className={cn(
 												'size-8 cursor-pointer rounded-full',
 												bgColorMap600[color],
-												activeColor === color && 'outline-ui-900 outline-3'
+												selectedColor === color && 'outline-ui-900 outline-3'
 											)}
 										></li>
 									)
