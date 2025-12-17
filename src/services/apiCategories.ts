@@ -20,6 +20,7 @@ type CategoryCreation = {
 type CategoryUpdate = {
 	id: string
 	name: string
+	type: string
 	icon: string
 	color: string
 }
@@ -70,7 +71,7 @@ export async function createCategory({ name, type, icon, color }: CategoryCreati
 	return data as Category
 }
 
-export async function editCategory({ id, name }: CategoryUpdate) {
+export async function editCategory({ id, name, type, color, icon }: CategoryUpdate) {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
@@ -81,7 +82,7 @@ export async function editCategory({ id, name }: CategoryUpdate) {
 
 	const { data, error } = await supabase
 		.from('categories')
-		.update({ name })
+		.update({ name, type, color, icon })
 		.eq('id', id)
 		.eq('user_id', user.id)
 		.select()

@@ -7,7 +7,7 @@ type CategoryListProps = {
 
 export default function CategoryList({ categories }: CategoryListProps) {
 	return (
-		<ul className="flex flex-wrap">
+		<ul className="flex flex-wrap gap-2">
 			{categories.map((category) => (
 				<CategoryItem key={category.id} category={category} />
 			))}

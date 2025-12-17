@@ -36,13 +36,13 @@ export default function CategoriesPage() {
 				<AddCategoryDialog />
 			</PageHeader>
 			<Container>
-				<div className="flex">
-					<div className="flex basis-[50%] flex-col gap-4">
-						<div className="text-4xl font-semibold">Income</div>
+				<div className="flex gap-4">
+					<div className="bg-ui-50 border-ui-200 flex basis-[50%] flex-col gap-4 rounded-xl border p-6">
+						<div className="text-3xl font-semibold">Income</div>
 						<CategoryList categories={incomeCategories} />
 					</div>
-					<div className="flex basis-[50%] flex-col gap-4">
-						<div className="text-4xl font-semibold">Expenses</div>
+					<div className="bg-ui-50 border-ui-200 flex basis-[50%] flex-col gap-4 rounded-xl border p-6">
+						<div className="text-3xl font-semibold">Expenses</div>
 						<CategoryList categories={expensesCategories} />
 					</div>
 				</div>
