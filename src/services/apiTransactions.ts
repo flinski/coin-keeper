@@ -146,3 +146,20 @@ export async function createTransaction({
 
 	return data as TransactionDb
 }
+
+export async function deleteTransaction(id: string) {
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	if (!user) {
+		throw new Error('User is not authenticated')
+	}
+
+	const { error } = await supabase.from('transactions').delete().eq('id', id).eq('user_id', user.id)
+
+	if (error) {
+		console.error(error.message)
+		throw new Error(error.message)
+	}
+}
