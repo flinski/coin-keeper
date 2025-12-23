@@ -76,7 +76,7 @@ export default function CategoryItem({ category }: CategoryItemProps) {
 		<>
 			<DropdownMenu modal={false}>
 				<DropdownMenuTrigger asChild>
-					<li className="hover:bg-ui-100 relative flex min-w-20 flex-col items-center gap-1 rounded-lg px-2 py-4">
+					<li className="hover:bg-ui-100 relative flex min-w-20 cursor-pointer flex-col items-center gap-1 rounded-lg px-2 py-4">
 						<div
 							className={cn(
 								'text-ui-50 inline-flex items-center justify-center rounded-full p-2',

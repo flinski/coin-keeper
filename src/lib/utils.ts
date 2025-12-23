@@ -1,7 +1,9 @@
-import { CATEGORY_ICONS } from '@/features/categories/icons'
+import { format } from 'date-fns'
+import { twMerge } from 'tailwind-merge'
 import { clsx, type ClassValue } from 'clsx'
 import type { LucideProps } from 'lucide-react'
-import { twMerge } from 'tailwind-merge'
+import { CATEGORY_ICONS } from '@/features/categories/icons'
+import type { Transaction } from '@/services/apiTransactions'
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
@@ -60,4 +62,18 @@ export function categoryIconsToIconsByCategory(
 		category,
 		icons,
 	}))
+}
+
+export function groupTransactionsByDate(transactions: Transaction[]) {
+	return transactions.reduce<Record<string, Transaction[]>>((groups, transaction) => {
+		const date = format(new Date(transaction.transaction_date), 'yyy-MM-dd')
+
+		if (!groups[date]) {
+			groups[date] = []
+		}
+
+		groups[date].push(transaction)
+
+		return groups
+	}, {})
 }
