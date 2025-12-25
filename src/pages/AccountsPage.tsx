@@ -62,7 +62,7 @@ export default function AccountsPage() {
 					<AddAccountDialog />
 				</div>
 			</PageHeader>
-			<Container className="flex flex-col gap-12">
+			<Container className="flex flex-col gap-10">
 				<AccountTotal accounts={accounts} />
 				<div className="flex flex-col gap-6">
 					<AccountList accounts={sortedAccounts} />

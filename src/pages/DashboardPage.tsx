@@ -1,3 +1,9 @@
+import PageHeader from '@/ui/PageHeader'
+
 export default function DashboardPage() {
-	return <div>Dashboard Page</div>
+	return (
+		<div>
+			<PageHeader title="Dashboard"></PageHeader>
+		</div>
+	)
 }

@@ -327,7 +327,7 @@ export default function AddTransactionDialog() {
 							</TabsContent>
 							<TabsContent value="transfer" className="flex flex-col gap-6">
 								<div className="flex flex-col gap-2">
-									<Label className="text-base">Transfer amount</Label>
+									<Label className="text-base">Amount</Label>
 									<Input
 										type="number"
 										disabled={isLoading}

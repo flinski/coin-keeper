@@ -6,11 +6,11 @@ type PageHeaderProps = {
 	className?: string
 }
 
-export default function PageHeader({ children, title, className }: PageHeaderProps) {
+export default function PageHeader({ children, title = '', className = '' }: PageHeaderProps) {
 	return (
 		<header
 			className={cn(
-				'bg-ui-50 border-ui-200 flex items-center justify-between border-b px-6 py-3',
+				'bg-ui-50 border-ui-200 flex h-[60px] items-center justify-between border-b px-6 py-3',
 				className
 			)}
 		>

@@ -72,7 +72,7 @@ export default function TransactionRow({ transaction }: TransactionRowProps) {
 					</DropdownMenuTrigger>
 					<DropdownMenuContent className="">
 						<DropdownMenuItem
-							onClick={() => deleteTransaction(transaction.id)}
+							onClick={() => deleteTransaction(transaction)}
 							className="focus:bg-red-50"
 						>
 							<Trash2 className="text-ui-950 size-4" />

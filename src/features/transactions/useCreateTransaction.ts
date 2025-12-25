@@ -8,6 +8,7 @@ export function useCreateTransaction() {
 		mutationFn: createTransactionApi,
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['transactions'] })
+			queryClient.invalidateQueries({ queryKey: ['accounts'] })
 		},
 	})
 

@@ -34,7 +34,7 @@ export default function TransactionsPage() {
 			</PageHeader>
 			<Container>
 				<div className="bg-ui-50 border-ui-200 flex flex-col gap-2 rounded-xl border px-5 py-6">
-					<div className="grid grid-cols-5 items-center gap-4 rounded-sm px-2 py-1 font-medium">
+					<div className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_32px] items-center gap-4 rounded-sm px-2 py-1 font-medium">
 						<div>Account</div>
 						<div>Type</div>
 						<div>Category</div>
