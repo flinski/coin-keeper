@@ -1,5 +1,6 @@
 import Logo from '@/ui/Logo'
 import SidebarNav from '@/ui/SidebarNav'
+import SidebarUser from '@/ui/SidebarUser'
 
 export default function Sidebar() {
 	return (
@@ -8,7 +9,7 @@ export default function Sidebar() {
 				<Logo />
 			</div>
 			<SidebarNav />
-			<div>User</div>
+			<SidebarUser />
 		</aside>
 	)
 }
