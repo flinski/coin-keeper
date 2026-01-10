@@ -7,7 +7,7 @@ import { Link } from 'react-router'
 export default function RegisterPage() {
 	return (
 		<div className="flex h-screen">
-			<div className="bg-ui-100 basis-1/2 p-8">
+			<div className="bg-accent-100 basis-1/2 p-8">
 				<Logo />
 			</div>
 			<div className="flex basis-1/2 flex-col p-8">

@@ -64,7 +64,7 @@ export default function RegisterForm() {
 				</div>
 			</div>
 
-			<Button disabled={isLoading}>
+			<Button disabled={isLoading} className="bg-accent-600 hover:bg-accent-600/90">
 				{isLoading ? (
 					<div className="flex items-center gap-2">
 						<Spinner className="text-ui-50" />

@@ -30,7 +30,7 @@ export default function SidebarUser() {
 	const { fullName, email } = user.user_metadata
 
 	return (
-		<div className="flex items-center justify-between p-2">
+		<div className="flex items-center justify-between p-3">
 			<div className="leading-tight">
 				<div className="font-medium">{fullName}</div>
 				<div className="text-ui-950/50 text-sm font-medium">{email}</div>
