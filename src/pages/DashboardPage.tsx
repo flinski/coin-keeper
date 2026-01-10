@@ -92,7 +92,7 @@ export default function DashboardPage() {
 						<div className="text-3xl font-semibold">Income</div>
 						<div>
 							<div className="flex flex-col items-center">
-								<div className="text-ui-950/50 text-sm font-medium">Total income</div>
+								<div className="text-ui-950/50 text-sm font-medium">Monthly income</div>
 								<div className="font-bold">{formatCurrency(sumIncome)}</div>
 							</div>
 							<ChartContainer config={incomeChartConfig} className="min-h-[200px] w-full">
@@ -129,7 +129,7 @@ export default function DashboardPage() {
 						<div className="text-3xl font-semibold">Expenses</div>
 						<div>
 							<div className="flex flex-col items-center">
-								<div className="text-ui-950/50 text-sm font-medium">Total Expenses</div>
+								<div className="text-ui-950/50 text-sm font-medium">Monthly expenses</div>
 								<div className="font-bold">{formatCurrency(sumExpenses)}</div>
 							</div>
 							<ChartContainer config={expensesChartConfig} className="min-h-[200px] w-full">
